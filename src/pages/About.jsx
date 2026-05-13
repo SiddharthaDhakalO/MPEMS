@@ -12,11 +12,11 @@ const team = [
 ]
 
 const milestones = [
-  { year: '2005 A.D.',  label: 'School Founded',           desc: 'Sunrise Primary School opened its doors with 3 classrooms and 40 students.' },
+  { year: '2005 A.D.',  label: 'School Founded',           desc: 'Modal Pashupati English Meddium School opened its doors with 3 classrooms and 40 students.' },
   { year: '2010 A.D.',  label: 'First Batch Graduated',    desc: 'Our first Class 5 batch completed primary education with distinction.' },
   { year: '2015 A.D.',  label: 'New Block Inaugurated',    desc: 'A new two-storey academic block was added, doubling our capacity.' },
   { year: '2020 A.D.',  label: 'Computer Lab Opened',      desc: 'A fully equipped computer lab was established for students from Class 3.' },
-  { year: '2025 A.D.',  label: '20 Years of Excellence',   desc: 'Celebrating two decades of nurturing over 2,000 students across Kathmandu.' },
+  { year: '2025 A.D.',  label: '20 Years of Excellence',   desc: 'Celebrating two decades of nurturing over 2,000 students across Bardiya.' },
 ]
 
 export default function About() {
@@ -30,8 +30,8 @@ export default function About() {
           </span>
           <h1 className="text-3xl md:text-4xl font-extrabold text-[#1E3A2F] mb-2">About Our School</h1>
           <p className="text-[#6B7280] leading-relaxed max-w-xl">
-            For 20 years, Sunrise Primary School has been a second home for children 
-            across Kathmandu — a place of learning, laughter and lifelong values.
+            For 20 years, Modal Pashupati English Meddium School has been a second home for children 
+            across Bardiya — a place of learning, laughter and lifelong values.
           </p>
         </div>
       </div>
@@ -39,30 +39,33 @@ export default function About() {
       {/* Mission & Vision */}
       <section className="py-14 px-4 md:px-8 bg-white">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div>
-            <span className="inline-block bg-[#FEF9C3] border border-[#FDE047] text-[#1E3A2F] text-xs font-bold px-4 py-1 rounded-full mb-4">
-              Who We Are
-            </span>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-[#1E3A2F] mb-4">
-              A joyful school for Kathmandu's youngest learners
-            </h2>
-            <p className="text-[#6B7280] leading-relaxed mb-4">
-              Founded in 2005, Sunrise Primary School is a government-registered, English-medium 
-              primary school located in Lazimpat, Kathmandu. We offer classes from Nursery to 
-              Class 5, following the CDC curriculum of Nepal.
-            </p>
-            <p className="text-[#6B7280] leading-relaxed">
-              Our philosophy is simple: every child deserves a safe, nurturing space where they 
-              are free to explore, make mistakes, and grow. We combine academic rigour with 
-              creativity, values, and community spirit.
-            </p>
+          <div className="flex flex-col gap-6">
+            <div>
+              <span className="inline-block bg-[#FEF9C3] border border-[#FDE047] text-[#1E3A2F] text-xs font-bold px-4 py-1 rounded-full mb-4">
+                Who We Are
+              </span>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#1E3A2F] mb-4">
+                A joyful school for Bardiya's youngest learners
+              </h2>
+              <p className="text-[#6B7280] leading-relaxed mb-4">
+                Founded in 2005, Modal Pashupati English Meddium School is a government-registered, English-medium 
+                primary school located in Geruwa rural municipality-5 Pashupatinagar, Bardiya. We offer classes from Nursery to 
+                Class 5, following the CDC curriculum of Nepal.
+              </p>
+              <p className="text-[#6B7280] leading-relaxed">
+                Our philosophy is simple: every child deserves a safe, nurturing space where they 
+                are free to explore, make mistakes, and grow. We combine academic rigour with 
+                creativity, values, and community spirit.
+              </p>
+            </div>
+            <img src="/images/school3.jpg" alt="Students and building" className="rounded-2xl border-4 border-[#86EFAC] w-full h-64 object-cover shadow-sm" />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             {[
               { emoji: '🎯', title: 'Mission',  text: 'To provide inclusive, quality primary education that prepares children for life, not just examinations.' },
-              { emoji: '🌅', title: 'Vision',   text: 'To be the most trusted community school in Kathmandu, known for joyful learning and holistic growth.' },
-              { emoji: '💛', title: 'Values',   text: 'Respect, kindness, curiosity and perseverance are the four pillars of the Sunrise community.' },
+              { emoji: '🌅', title: 'Vision',   text: 'To be the most trusted community school in Bardiya, known for joyful learning and holistic growth.' },
+              { emoji: '💛', title: 'Values',   text: 'Respect, kindness, curiosity and perseverance are the four pillars of our school community.' },
               { emoji: '🏫', title: 'Campus',   text: 'Our campus includes spacious classrooms, a library, computer lab, art room and open playground.' },
             ].map(c => (
               <div key={c.title} className="bg-[#FEF9C3] border border-[#FDE047] rounded-2xl p-5 hover:shadow-md transition">

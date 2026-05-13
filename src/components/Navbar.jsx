@@ -28,7 +28,7 @@ export default function Navbar() {
           <span className="text-3xl">🌸</span>
           <div>
             <p className="font-extrabold text-base leading-tight text-[#1E3A2F] group-hover:text-[#FDE047] transition-colors duration-200">
-              Sunrise Primary School
+              Modal Pashupati English Meddium School
             </p>
             <p className="text-[10px] text-[#6B7280] leading-none font-medium">Nurturing young minds since 2005</p>
           </div>

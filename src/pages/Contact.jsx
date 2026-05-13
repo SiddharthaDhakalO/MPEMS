@@ -139,9 +139,9 @@ export default function Contact() {
             <div className="bg-[#F0FDF4] border border-[#86EFAC] rounded-2xl p-6 shadow-sm">
               <h3 className="font-extrabold text-[#1E3A2F] text-base mb-4">📍 School Location</h3>
               <p className="text-[#6B7280] text-sm leading-relaxed">
-                Lazimpat, Ward No. 2<br />
-                Kathmandu Metropolitan City<br />
-                Bagmati Province, Nepal
+                Geruwa rural municipality-5<br />
+                Pashupatinagar, Bardiya<br />
+                Lumbini Province, Nepal
               </p>
             </div>
 
@@ -150,7 +150,7 @@ export default function Contact() {
               <ul className="space-y-3 text-sm text-[#6B7280]">
                 <li><span className="font-bold text-[#1E3A2F]">Phone:</span> +977-1-4443210</li>
                 <li><span className="font-bold text-[#1E3A2F]">Mobile:</span> +977-9801234567</li>
-                <li><span className="font-bold text-[#1E3A2F]">Email:</span> info@sunriseschool.edu.np</li>
+                <li><span className="font-bold text-[#1E3A2F]">Email:</span> info@mpems.edu.np</li>
               </ul>
             </div>
 

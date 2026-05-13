@@ -9,13 +9,13 @@ export default function Footer() {
           <div className="flex items-center gap-2 mb-4">
             <span className="text-3xl">🌸</span>
             <div>
-              <p className="font-extrabold text-lg leading-tight">Sunrise Primary School</p>
-              <p className="text-xs text-green-200">सनराइज प्राथमिक विद्यालय</p>
+              <p className="font-extrabold text-lg leading-tight">Modal Pashupati English Meddium School</p>
+              <p className="text-xs text-green-200">मोडल पशुपति इङलिस मिडियम स्कुल</p>
             </div>
           </div>
           <p className="text-green-100 text-sm leading-relaxed mb-4">
             Nurturing curious young minds in a safe, joyful environment since 2005. 
-            Serving Nursery to Class 5 in the heart of Kathmandu.
+            Serving Nursery to Class 5 in Geruwa rural municipality-5 Pashupatinagar, Bardiya.
           </p>
           <p className="text-green-200 text-xs font-semibold">
             Academic Year: 2082 B.S. (2025–26 A.D.)
@@ -57,8 +57,7 @@ export default function Footer() {
           <h4 className="font-bold text-base mb-4 text-[#FDE047]">Contact Us</h4>
           <ul className="space-y-3">
             <li className="flex items-start gap-3 text-sm text-green-100">
-              <span className="mt-0.5">📍</span>
-              <span>Lazimpat, Ward No. 2<br />Kathmandu Metropolitan City<br />Bagmati Province, Nepal</span>
+              <span>Geruwa rural municipality-5<br />Pashupatinagar, Bardiya<br />Lumbini Province, Nepal</span>
             </li>
             <li className="flex items-center gap-3 text-sm text-green-100">
               <span>📞</span>
@@ -83,7 +82,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="max-w-6xl mx-auto px-4 md:px-8 py-4 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-green-200">
-          <p>© 2082 B.S. Sunrise Primary School. All rights reserved.</p>
+          <p>© 2082 B.S. Modal Pashupati English Meddium School. All rights reserved.</p>
           <p>🇳🇵 Made with pride in Nepal</p>
         </div>
       </div>
