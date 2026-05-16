@@ -6,8 +6,8 @@ export default function Topbar() {
           <a href="tel:+97714443210" className="flex items-center gap-1 font-semibold hover:opacity-70 transition">
             📞 +977-1-4443210
           </a>
-          <a href="mailto:info@sunriseschool.edu.np" className="flex items-center gap-1 font-semibold hover:opacity-70 transition">
-            ✉️ info@sunriseschool.edu.np
+          <a href="mailto:info@modelpashupati.edu.np" className="flex items-center gap-1 font-semibold hover:opacity-70 transition">
+            ✉️ info@modelpashupati.edu.np
           </a>
         </div>
         <div className="flex items-center gap-3">

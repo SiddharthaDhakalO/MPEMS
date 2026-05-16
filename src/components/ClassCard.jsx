@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 const colorMap = {
   yellow: {
@@ -22,14 +23,30 @@ export default function ClassCard({ cls, showLink = false }) {
   const c = colorMap[cls.color] || colorMap.yellow
 
   return (
-    <div className={`bg-white border ${c.border} rounded-2xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-200 flex flex-col`}>
+    <motion.div 
+      whileHover="hover"
+      initial="rest"
+      variants={{
+        rest: { y: 0, scale: 1 },
+        hover: { y: -5, scale: 1.02 }
+      }}
+      transition={{ duration: 0.2 }}
+      className={`bg-white border ${c.border} rounded-2xl p-6 shadow-sm flex flex-col`}
+    >
       <div className="flex items-start justify-between mb-3">
         <div className={`w-12 h-12 ${c.icon} rounded-xl flex items-center justify-center text-2xl`}>
           {cls.emoji}
         </div>
-        <span className={`text-xs font-bold px-3 py-1 rounded-full ${c.pill}`}>
+        <motion.span 
+          variants={{
+            rest: { rotate: 0 },
+            hover: { rotate: [0, -10, 10, -10, 10, 0] }
+          }}
+          transition={{ duration: 0.5 }}
+          className={`text-xs font-bold px-3 py-1 rounded-full ${c.pill}`}
+        >
           {cls.level}
-        </span>
+        </motion.span>
       </div>
 
       <h3 className="font-extrabold text-[#1E3A2F] text-lg mb-0.5">{cls.name}</h3>
@@ -54,6 +71,6 @@ export default function ClassCard({ cls, showLink = false }) {
           Enroll Now →
         </Link>
       )}
-    </div>
+    </motion.div>
   )
 }

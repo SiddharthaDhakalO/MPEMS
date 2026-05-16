@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
   { to: '/',        label: 'Home'    },
@@ -13,22 +14,45 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled]   = useState(false)
   const [menuOpen, setMenuOpen]   = useState(false)
+  const [hidden, setHidden]       = useState(false)
+  const [hoveredPath, setHoveredPath] = useState(null)
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  const { scrollY } = useScroll()
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious()
+    if (latest > previous && latest > 100) {
+      setHidden(true)
+    } else {
+      setHidden(false)
+    }
+    setScrolled(latest > 10)
+  })
 
   return (
-    <header className={`sticky top-0 z-50 w-full bg-white transition-all duration-300 ${scrolled ? 'shadow-md border-b border-gray-100' : 'border-b border-gray-100'}`}>
+    <motion.header
+      variants={{
+        visible: { y: 0 },
+        hidden: { y: "-100%" }
+      }}
+      animate={hidden ? "hidden" : "visible"}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      className={`sticky top-0 z-50 w-full bg-white transition-shadow duration-300 ${scrolled ? 'shadow-md border-b border-gray-100' : 'border-b border-gray-100'}`}
+    >
       <div className="max-w-6xl mx-auto px-4 md:px-8 flex items-center justify-between h-16">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group" onClick={() => setMenuOpen(false)}>
-          <span className="text-3xl">🌸</span>
+          <motion.span
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
+            className="text-3xl"
+          >
+            🌸
+          </motion.span>
           <div>
             <p className="font-extrabold text-base leading-tight text-[#1E3A2F] group-hover:text-[#FDE047] transition-colors duration-200">
-              Modal Pashupati English Meddium School
+              Model Pashupati English Medium School
             </p>
             <p className="text-[10px] text-[#6B7280] leading-none font-medium">Nurturing young minds since 2005</p>
           </div>
@@ -41,6 +65,8 @@ export default function Navbar() {
               key={link.to}
               to={link.to}
               end={link.to === '/'}
+              onMouseEnter={() => setHoveredPath(link.to)}
+              onMouseLeave={() => setHoveredPath(null)}
               className={({ isActive }) =>
                 `px-3 py-2 text-sm font-semibold rounded-lg transition-all duration-200 relative group ${
                   isActive
@@ -52,7 +78,19 @@ export default function Navbar() {
               {({ isActive }) => (
                 <>
                   {link.label}
-                  <span className={`absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-[#FDE047] transition-all duration-200 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'}`} />
+                  {link.to === hoveredPath && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-[#FDE047]"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    />
+                  )}
+                  {isActive && link.to !== hoveredPath && (
+                    <span className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-[#FDE047] opacity-100 transition-all duration-200" />
+                  )}
                 </>
               )}
             </NavLink>
@@ -60,13 +98,18 @@ export default function Navbar() {
         </nav>
 
         {/* CTA Button */}
-        <Link
-          to="/contact"
-          className="hidden md:inline-flex items-center gap-1 bg-[#FDE047] text-[#1E3A2F] font-semibold text-sm px-5 py-2 rounded-full hover:bg-[#facc15] transition-all duration-200 shadow-sm hover:shadow-md"
-          onClick={() => setMenuOpen(false)}
+        <motion.div
+          animate={{ scale: [1, 1.05, 1] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
         >
-          ✏️ Enroll Now
-        </Link>
+          <Link
+            to="/contact"
+            className="hidden md:inline-flex items-center gap-1 bg-[#FDE047] text-[#1E3A2F] font-semibold text-sm px-5 py-2 rounded-full hover:bg-[#facc15] transition-all duration-200 shadow-sm hover:shadow-md"
+            onClick={() => setMenuOpen(false)}
+          >
+            ✏️ Enroll Now
+          </Link>
+        </motion.div>
 
         {/* Hamburger */}
         <button
@@ -82,34 +125,43 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden overflow-hidden transition-all duration-300 ${menuOpen ? 'max-h-96 border-t border-gray-100' : 'max-h-0'}`}>
-        <nav className="px-4 pb-4 pt-2 flex flex-col gap-1 bg-white">
-          {navLinks.map(link => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.to === '/'}
-              className={({ isActive }) =>
-                `px-4 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 ${
-                  isActive
-                    ? 'bg-[#FEF9C3] text-[#1E3A2F] border-l-4 border-[#FDE047]'
-                    : 'text-[#6B7280] hover:bg-gray-50 hover:text-[#1E3A2F]'
-                }`
-              }
-              onClick={() => setMenuOpen(false)}
-            >
-              {link.label}
-            </NavLink>
-          ))}
-          <Link
-            to="/contact"
-            className="mt-2 text-center bg-[#FDE047] text-[#1E3A2F] font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-[#facc15] transition"
-            onClick={() => setMenuOpen(false)}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="md:hidden overflow-hidden border-t border-gray-100 bg-white"
           >
-            ✏️ Enroll Now
-          </Link>
-        </nav>
-      </div>
-    </header>
+            <nav className="px-4 pb-4 pt-2 flex flex-col gap-1">
+              {navLinks.map(link => (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  end={link.to === '/'}
+                  className={({ isActive }) =>
+                    `px-4 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 ${
+                      isActive
+                        ? 'bg-[#FEF9C3] text-[#1E3A2F] border-l-4 border-[#FDE047]'
+                        : 'text-[#6B7280] hover:bg-gray-50 hover:text-[#1E3A2F]'
+                    }`
+                  }
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+              <Link
+                to="/contact"
+                className="mt-2 text-center bg-[#FDE047] text-[#1E3A2F] font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-[#facc15] transition"
+                onClick={() => setMenuOpen(false)}
+              >
+                ✏️ Enroll Now
+              </Link>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   )
 }

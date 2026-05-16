@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { classes } from '../data/classes'
 import ClassCard from './ClassCard'
+import FadeInSection from './FadeInSection'
 
 export default function ClassesSection() {
   return (
     <section className="py-16 px-4 md:px-8 bg-[#E0F2FE]">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-10">
+        <FadeInSection className="text-center mb-10">
           <span className="inline-block bg-[#7DD3FC] text-[#1E3A2F] text-xs font-bold px-4 py-1 rounded-full mb-3">
             Our Classes
           </span>
@@ -17,27 +19,35 @@ export default function ClassesSection() {
             Each class is thoughtfully designed with age-appropriate curriculum, 
             trained teachers, and a warm learning atmosphere.
           </p>
-        </div>
+        </FadeInSection>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {classes.map(cls => (
-            <ClassCard key={cls.id} cls={cls} />
+          {classes.map((cls, index) => (
+            <FadeInSection key={cls.id} delay={index * 0.1}>
+              <ClassCard cls={cls} />
+            </FadeInSection>
           ))}
 
           {/* CTA Card */}
-          <div className="bg-[#FDE047] border-2 border-[#facc15] rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
-            <span className="text-5xl mb-4">🎉</span>
-            <h3 className="font-extrabold text-[#1E3A2F] text-xl mb-2">Ready to Join?</h3>
-            <p className="text-[#1E3A2F]/70 text-sm mb-5 leading-relaxed">
-              Enroll your child today and give them the bright future they deserve.
-            </p>
-            <Link
-              to="/contact"
-              className="bg-[#1E3A2F] text-white font-bold text-sm px-6 py-2.5 rounded-full hover:bg-[#163020] transition"
+          <FadeInSection delay={classes.length * 0.1}>
+            <motion.div 
+              animate={{ scale: [1, 1.02, 1] }}
+              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+              className="bg-[#FDE047] border-2 border-[#facc15] rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-sm h-full"
             >
-              Apply Now →
-            </Link>
-          </div>
+              <span className="text-5xl mb-4">🎉</span>
+              <h3 className="font-extrabold text-[#1E3A2F] text-xl mb-2">Ready to Join?</h3>
+              <p className="text-[#1E3A2F]/70 text-sm mb-5 leading-relaxed">
+                Enroll your child today and give them the bright future they deserve.
+              </p>
+              <Link
+                to="/contact"
+                className="bg-[#1E3A2F] text-white font-bold text-sm px-6 py-2.5 rounded-full hover:bg-[#163020] transition"
+              >
+                Apply Now →
+              </Link>
+            </motion.div>
+          </FadeInSection>
         </div>
       </div>
     </section>
