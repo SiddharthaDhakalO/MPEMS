@@ -1,12 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { galleryItems } from '../data/gallery'
 
 const categories = ['All', 'Events', 'Classroom', 'Sports']
 
 export default function Gallery() {
   const [active, setActive] = useState('All')
   const [selectedImage, setSelectedImage] = useState(null)
+  const [galleryItems, setGalleryItems] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/data/gallery.json')
+      .then(res => res.json())
+      .then(data => {
+        setGalleryItems(data)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error('Error fetching gallery:', err)
+        setLoading(false)
+      })
+  }, [])
 
   const filtered = active === 'All'
     ? galleryItems

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { AnimatePresence, motion, useScroll } from 'framer-motion'
 import Topbar  from './components/Topbar'
 import Navbar  from './components/Navbar'
@@ -11,32 +11,26 @@ import Gallery from './pages/Gallery'
 import Contact from './pages/Contact'
 import FloatingBackground from './components/FloatingBackground'
 
+// Admin Imports
+import AdminLogin from './admin/pages/AdminLogin'
+import AdminLayout from './admin/components/AdminLayout'
+import ProtectedRoute from './admin/components/ProtectedRoute'
+import AdminDashboard from './admin/pages/AdminDashboard'
+import AdminNotices from './admin/pages/AdminNotices'
+import AdminGallery from './admin/pages/AdminGallery'
+import AdminEnrollments from './admin/pages/AdminEnrollments'
+import AdminContent from './admin/pages/AdminContent'
+
 function ScrollToTop() {
-  // Scroll to top on route change
   if (typeof window !== 'undefined') {
     window.scrollTo(0, 0)
   }
   return null
 }
 
-function AnimatedRoutes() {
-  const location = useLocation();
-  return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/"        element={<><ScrollToTop /><Home /></>}    />
-        <Route path="/about"   element={<><ScrollToTop /><About /></>}   />
-        <Route path="/classes" element={<><ScrollToTop /><Classes /></>} />
-        <Route path="/notices" element={<><ScrollToTop /><Notices /></>} />
-        <Route path="/gallery" element={<><ScrollToTop /><Gallery /></>} />
-        <Route path="/contact" element={<><ScrollToTop /><Contact /></>} />
-      </Routes>
-    </AnimatePresence>
-  );
-}
-
-function AppContent() {
+function PublicLayout() {
   const { scrollYProgress } = useScroll();
+  const location = useLocation();
 
   return (
     <div className="min-h-screen flex flex-col font-[Nunito] relative">
@@ -54,7 +48,18 @@ function AppContent() {
         <Topbar />
         <Navbar />
         <main className="flex-1">
-          <AnimatedRoutes />
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+              <Route path="/"        element={<><ScrollToTop /><Home /></>}    />
+              <Route path="/about"   element={<><ScrollToTop /><About /></>}   />
+              <Route path="/classes" element={<><ScrollToTop /><Classes /></>} />
+              <Route path="/notices" element={<><ScrollToTop /><Notices /></>} />
+              <Route path="/gallery" element={<><ScrollToTop /><Gallery /></>} />
+              <Route path="/contact" element={<><ScrollToTop /><Contact /></>} />
+              {/* Fallback */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </AnimatePresence>
         </main>
         <Footer />
       </div>
@@ -65,7 +70,20 @@ function AppContent() {
 export default function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <Routes>
+        {/* Admin Routes */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="notices" element={<AdminNotices />} />
+          <Route path="gallery" element={<AdminGallery />} />
+          <Route path="enrollments" element={<AdminEnrollments />} />
+          <Route path="content" element={<AdminContent />} />
+        </Route>
+
+        {/* Public Routes */}
+        <Route path="/*" element={<PublicLayout />} />
+      </Routes>
     </BrowserRouter>
   )
 }

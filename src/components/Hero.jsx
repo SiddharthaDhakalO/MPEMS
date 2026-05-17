@@ -1,5 +1,6 @@
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
 import NoticeTicker from './NoticeTicker'
 import CountUp from './CountUp'
@@ -7,6 +8,40 @@ import CountUp from './CountUp'
 export default function Hero() {
   const { scrollYProgress } = useScroll()
   const yParallax = useTransform(scrollYProgress, [0, 1], [0, -100])
+
+  const [content, setContent] = useState({
+    heroTagline: 'A joyful place where little ones love to learn',
+    heroSubtext: 'Nurturing curious minds from Nursery to Class 5. We blend the national CDC curriculum with creative exploration.',
+    statsStudents: 200,
+    statsTeachers: 18,
+    statsYears: 20
+  })
+
+  useEffect(() => {
+    fetch('/data/siteContent.json')
+      .then(r => r.json())
+      .then(data => {
+        if (data) setContent(prev => ({ ...prev, ...data }))
+      })
+      .catch(err => console.error('Error fetching site content:', err))
+  }, [])
+
+  const [cards, setCards] = useState([
+    { id: 1, src: '/images/school1.jpg', rotate: -6 },
+    { id: 2, src: '/images/school3.jpg', rotate: 4 },
+    { id: 3, src: '/images/school4.jpg', rotate: -3 },
+    { id: 4, src: '/images/school5.jpg', rotate: 6 },
+    { id: 5, src: '/images/school2.jpg', rotate: 0 },
+  ])
+
+  const cycleCards = () => {
+    setCards((prev) => {
+      const newCards = [...prev]
+      const topCard = newCards.pop()
+      newCards.unshift(topCard)
+      return newCards
+    })
+  }
 
   const handleConfetti = (e) => {
     const rect = e.target.getBoundingClientRect()
@@ -63,12 +98,16 @@ export default function Hero() {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#1E3A2F] leading-tight mb-5"
             >
-              A joyful place where{' '}
-              <span className="relative inline-block">
-                little ones
-                <span className="absolute -bottom-1 left-0 right-0 h-3 bg-[#FDE047] -z-10 rounded" />
-              </span>{' '}
-              love to learn
+              {content.heroTagline.split(' ').map((word, i) => (
+                <React.Fragment key={i}>
+                  {word === 'little' || word === 'ones' ? (
+                    <span className="relative inline-block">
+                      {word}
+                      <span className="absolute -bottom-1 left-0 right-0 h-3 bg-[#FDE047] -z-10 rounded" />
+                    </span>
+                  ) : word}{' '}
+                </React.Fragment>
+              ))}
             </motion.h1>
 
             <motion.p 
@@ -77,9 +116,7 @@ export default function Hero() {
               transition={{ delay: 0.4, duration: 0.5 }}
               className="text-[#6B7280] text-lg leading-relaxed mb-8 max-w-xl"
             >
-              Model Pashupati English Medium School provides a nurturing, child-friendly environment 
-              for Nursery to Class 5 students in Geruwa rural municipality-5 Pashupatinagar, Bardiya. We blend the national CDC 
-              curriculum with creative exploration.
+              {content.heroSubtext}
             </motion.p>
 
             <motion.div 
@@ -111,9 +148,9 @@ export default function Hero() {
               className="mt-12 grid grid-cols-3 gap-4 max-w-lg"
             >
               {[
-                { value: 200, suffix: '+', label: 'Students',  emoji: '👦' },
-                { value: 18,  suffix: '',  label: 'Teachers',  emoji: '👩‍🏫' },
-                { value: 20,  suffix: '',  label: 'Years',     emoji: '🏫' },
+                { value: content.statsStudents, suffix: '+', label: 'Students',  emoji: '👦' },
+                { value: content.statsTeachers, suffix: '',  label: 'Teachers',  emoji: '👩‍🏫' },
+                { value: content.statsYears,    suffix: '',  label: 'Years',     emoji: '🏫' },
               ].map(stat => (
                 <motion.div
                   key={stat.label}
@@ -135,20 +172,51 @@ export default function Hero() {
             animate={{ opacity: 1, x: 0, rotate: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
             style={{ y: yParallax }}
-            className="w-full md:w-1/2 mt-8 md:mt-0 relative"
+            className="w-full md:w-1/2 mt-8 md:mt-0 relative h-[400px] md:h-[500px] flex items-center justify-center cursor-pointer"
+            onClick={cycleCards}
           >
             <motion.div 
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               className="absolute -inset-4 bg-gradient-to-tr from-[#FDE047] to-[#86EFAC] rounded-3xl opacity-50 blur-lg -z-10"
             ></motion.div>
-            <motion.img 
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              src="/images/school2.jpg" 
-              alt="Model Pashupati English Medium School Building" 
-              className="rounded-2xl shadow-xl border-4 border-white object-cover w-full h-[400px] md:h-[500px]" 
-            />
+            
+            <div className="relative w-full h-full perspective-1000">
+              <AnimatePresence mode="popLayout">
+                {cards.map((card, index) => {
+                  const isTop = index === cards.length - 1;
+                  return (
+                    <motion.img
+                      key={card.id}
+                      src={card.src}
+                      alt="School Building"
+                      layout
+                      initial={{ scale: 0.8, opacity: 0, rotate: card.rotate - 20 }}
+                      animate={{
+                        scale: isTop ? 1 : 1 - (cards.length - index) * 0.05,
+                        opacity: isTop ? 1 : 0.7 - (cards.length - index) * 0.1,
+                        y: isTop ? 0 : (cards.length - index) * 15,
+                        rotate: isTop ? 0 : card.rotate,
+                        zIndex: index,
+                      }}
+                      exit={{ scale: 0.5, opacity: 0, y: -50 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                      whileHover={isTop ? { scale: 1.05, rotateY: 10, rotateX: 5 } : {}}
+                      className="absolute inset-0 m-auto rounded-2xl shadow-2xl border-4 border-white object-cover w-[90%] md:w-full h-[80%] md:h-[90%] origin-center"
+                    />
+                  );
+                })}
+              </AnimatePresence>
+            </div>
+            {/* Click hint */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 2 }}
+              className="absolute -bottom-6 bg-white text-[#1E3A2F] text-xs font-bold px-3 py-1 rounded-full shadow-md animate-bounce pointer-events-none"
+            >
+              👆 Click to see more
+            </motion.div>
           </motion.div>
         </div>
       </section>

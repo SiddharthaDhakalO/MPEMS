@@ -19,10 +19,26 @@ export default function Contact() {
   const handleFocus = (e) => setFocusedField(e.target.name)
   const handleBlur = () => setFocusedField(null)
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
     setLoading(true)
-    setTimeout(() => { 
+    
+    try {
+      const { submitEnrollment } = await import('../admin/utils/githubApi')
+      
+      const newEntry = {
+        id: Date.now().toString(),
+        parentName: form.name,
+        phone: form.phone,
+        childName: form.childName,
+        classInterested: form.classInterest,
+        message: form.message,
+        submittedAt: new Date().toISOString(),
+        read: false
+      }
+
+      await submitEnrollment(newEntry)
+      
       setLoading(false)
       setSubmitted(true)
       
@@ -51,7 +67,11 @@ export default function Contact() {
         }
       };
       frame();
-    }, 1200)
+    } catch (err) {
+      console.error('Failed to submit enrollment:', err)
+      alert('Sorry, something went wrong while sending your message. Please try again later.')
+      setLoading(false)
+    }
   }
 
   return (

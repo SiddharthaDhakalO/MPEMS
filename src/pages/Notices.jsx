@@ -1,12 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { notices } from '../data/notices'
 import NoticeCard from '../components/NoticeCard'
 
 const tags = ['All', 'Admissions', 'Event', 'Holiday']
 
 export default function Notices() {
   const [active, setActive] = useState('All')
+  const [notices, setNotices] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/data/notices.json')
+      .then(res => res.json())
+      .then(data => {
+        setNotices(data.filter(n => n.published))
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error('Error fetching notices:', err)
+        setLoading(false)
+      })
+  }, [])
 
   const filtered = active === 'All'
     ? notices

@@ -1,8 +1,22 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import FadeInSection from './FadeInSection'
+import { useState, useEffect } from 'react'
 
 export default function Footer() {
+  const [content, setContent] = useState({
+    address: 'Geruwa rural municipality-5, Pashupatinagar, Bardiya',
+    phone: '+977-1-4443210',
+    email: 'info@modelpashupati.edu.np',
+    facebookUrl: '#'
+  })
+
+  useEffect(() => {
+    fetch('/data/siteContent.json')
+      .then(r => r.json())
+      .then(data => setContent(data))
+      .catch(err => console.error('Error fetching site content:', err))
+  }, [])
+
   return (
     <motion.footer 
       initial={{ y: 50, opacity: 0 }}
@@ -35,7 +49,9 @@ export default function Footer() {
             Academic Year: 2082 B.S. (2025–26 A.D.)
           </p>
           <div className="mt-4 flex gap-3">
-            <motion.span whileHover={{ scale: 1.1, rotate: 5 }} className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-sm hover:bg-[#FDE047] hover:text-[#1E3A2F] cursor-pointer transition">📘</motion.span>
+            <a href={content.facebookUrl} target="_blank" rel="noreferrer">
+              <motion.span whileHover={{ scale: 1.1, rotate: 5 }} className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-sm hover:bg-[#FDE047] hover:text-[#1E3A2F] cursor-pointer transition">📘</motion.span>
+            </a>
             <motion.span whileHover={{ scale: 1.1, rotate: -5 }} className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-sm hover:bg-[#FDE047] hover:text-[#1E3A2F] cursor-pointer transition">📸</motion.span>
             <motion.span whileHover={{ scale: 1.1, rotate: 5 }} className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-sm hover:bg-[#FDE047] hover:text-[#1E3A2F] cursor-pointer transition">🐦</motion.span>
           </div>
@@ -53,6 +69,7 @@ export default function Footer() {
               { label: 'Photo Gallery',  to: '/gallery' },
               { label: 'Contact Us',     to: '/contact' },
               { label: 'Enroll Now',     to: '/contact' },
+              { label: 'Admin Portal',    to: '/admin' },
             ].map(link => (
               <li key={link.label}>
                 <Link
@@ -73,19 +90,15 @@ export default function Footer() {
           <ul className="space-y-3">
             <li className="flex items-start gap-3 text-sm text-green-100">
               <span>📍</span>
-              <span>Geruwa rural municipality-5<br />Pashupatinagar, Bardiya<br />Lumbini Province, Nepal</span>
+              <span>{content.address}</span>
             </li>
             <li className="flex items-center gap-3 text-sm text-green-100">
               <span>📞</span>
-              <a href="tel:+97714443210" className="hover:text-[#FDE047] transition">+977-1-4443210</a>
-            </li>
-            <li className="flex items-center gap-3 text-sm text-green-100">
-              <span>📱</span>
-              <a href="tel:+9779801234567" className="hover:text-[#FDE047] transition">+977-9801234567</a>
+              <a href={`tel:${content.phone}`} className="hover:text-[#FDE047] transition">{content.phone}</a>
             </li>
             <li className="flex items-center gap-3 text-sm text-green-100">
               <span>📧</span>
-              <a href="mailto:info@modelpashupati.edu.np" className="hover:text-[#FDE047] transition">info@modelpashupati.edu.np</a>
+              <a href={`mailto:${content.email}`} className="hover:text-[#FDE047] transition">{content.email}</a>
             </li>
             <li className="flex items-start gap-3 text-sm text-green-100">
               <span>🕐</span>
