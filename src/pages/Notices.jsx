@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import NoticeCard from '../components/NoticeCard'
 
-const tags = ['All', 'Admissions', 'Event', 'Holiday']
+const tags = ['All', 'Admissions', 'Event', 'Holiday', 'General']
 
 export default function Notices() {
   const [active, setActive] = useState('All')
@@ -67,6 +67,7 @@ export default function Notices() {
                   {tag === 'Admissions' && '📝 '}
                   {tag === 'Event' && '🎉 '}
                   {tag === 'Holiday' && '🏖️ '}
+                  {tag === 'General' && '📌 '}
                   {tag}
                 </span>
               </button>
@@ -92,7 +93,7 @@ export default function Notices() {
           </motion.div>
 
           <AnimatePresence>
-            {filtered.length === 0 && (
+            {!loading && filtered.length === 0 && (
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}

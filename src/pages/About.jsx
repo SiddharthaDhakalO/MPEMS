@@ -1,6 +1,5 @@
 import { useRef } from 'react'
 import { motion, useMotionValue, useTransform } from 'framer-motion'
-import EnrollCTA    from '../components/EnrollCTA'
 import WhyUs        from '../components/WhyUs'
 import Testimonials from '../components/Testimonials'
 import FadeInSection from '../components/FadeInSection'
@@ -106,10 +105,10 @@ export default function About() {
 
           <div className="grid grid-cols-2 gap-4" style={{ perspective: 1000 }}>
             {[
-              { emoji: '🎯', title: 'Mission',  text: 'To provide inclusive, quality primary education that prepares children for life, not just examinations.' },
-              { emoji: '🌅', title: 'Vision',   text: 'To be the most trusted community school in Bardiya, known for joyful learning and holistic growth.' },
-              { emoji: '💛', title: 'Values',   text: 'Respect, kindness, curiosity and perseverance are the four pillars of our school community.' },
-              { emoji: '🏫', title: 'Campus',   text: 'Our campus includes spacious classrooms, a library, computer lab, art room and open playground.' },
+              { emoji: '🎯', title: 'Mission',  text: 'To provide inclusive, high-quality primary education that empowers children to discover their potential, fosters critical thinking, and prepares them for real-world challenges.' },
+              { emoji: '🌅', title: 'Vision',   text: 'To become the most trusted and innovative community school in Bardiya, renowned for cultivating a joyful learning environment and nurturing holistic child development.' },
+              { emoji: '💛', title: 'Values',   text: 'We are guided by respect, kindness, curiosity, and perseverance. These pillars shape our community, encouraging students to support one another and never stop learning.' },
+              { emoji: '🏫', title: 'Campus',   text: 'Our safe and vibrant campus features spacious classrooms, a well-stocked library, a modern computer lab, an expressive art room, and an expansive playground for active play.' },
             ].map((c, i) => (
               <FadeInSection key={c.title} delay={i * 0.1}>
                 <motion.div 
@@ -232,7 +231,6 @@ export default function About() {
 
       <WhyUs />
       <Testimonials />
-      <EnrollCTA />
     </div>
   )
 }

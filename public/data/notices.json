@@ -7,5 +7,41 @@
     "tag": "Admissions",
     "description": "Forms available at school office 10AM–3PM.",
     "published": true
+  },
+  {
+    "id": "2",
+    "title": "Annual Sports Day",
+    "date_bs": "Chaitra 5, 2081",
+    "date_en": "2025-03-18",
+    "tag": "Event",
+    "description": "Join us for our Annual Sports Day filled with games, fun, and awards for our young athletes.",
+    "published": true
+  },
+  {
+    "id": "3",
+    "title": "Holi Festival Holiday",
+    "date_bs": "Chaitra 11, 2081",
+    "date_en": "2025-03-24",
+    "tag": "Holiday",
+    "description": "The school will remain closed for the Holi Festival. We wish you a colorful and safe celebration!",
+    "published": true
+  },
+  {
+    "id": "4",
+    "title": "New School Timings",
+    "date_bs": "Baisakh 1, 2082",
+    "date_en": "2025-04-14",
+    "tag": "General",
+    "description": "Starting from the new academic year, regular school hours will be from 9:30 AM to 3:30 PM.",
+    "published": true
+  },
+  {
+    "id": "5",
+    "title": "Parent-Teacher Meeting",
+    "date_bs": "Baisakh 15, 2082",
+    "date_en": "2025-04-28",
+    "tag": "Event",
+    "description": "First term PTM will be held on Baisakh 15. All parents are requested to attend.",
+    "published": true
   }
 ]

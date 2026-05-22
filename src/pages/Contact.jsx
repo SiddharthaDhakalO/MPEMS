@@ -266,6 +266,14 @@ export default function Contact() {
                 <li><span className="font-bold text-[#1E3A2F]">Mobile:</span> +977-9801234567</li>
                 <li><span className="font-bold text-[#1E3A2F]">Email:</span> info@mpems.edu.np</li>
               </ul>
+              <a 
+                href="https://wa.me/9779774443210" 
+                target="_blank" 
+                rel="noreferrer"
+                className="mt-5 inline-flex items-center gap-2 bg-[#25D366] text-white font-bold py-2 px-4 rounded-xl hover:bg-[#1ebd5a] transition shadow-sm"
+              >
+                <span>💬</span> Chat on WhatsApp
+              </a>
             </FadeInSection>
 
             <FadeInSection delay={0.4} className="bg-[#FEF9C3] border border-[#FDE047] rounded-2xl p-6 shadow-sm">
@@ -278,6 +286,19 @@ export default function Contact() {
                   * Closed on public holidays and school breaks
                 </li>
               </ul>
+            </FadeInSection>
+
+            <FadeInSection delay={0.5} className="bg-white border border-gray-200 rounded-2xl p-2 shadow-sm h-64 overflow-hidden">
+              <iframe 
+                title="School Location"
+                src="https://www.google.com/maps?q=Geruwa-5,+Pashupatinagar,+Bardiya,+Nepal&output=embed"
+                width="100%" 
+                height="100%" 
+                style={{ border: 0, borderRadius: '12px' }} 
+                allowFullScreen="" 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
             </FadeInSection>
           </div>
         </div>
