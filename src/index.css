@@ -46,8 +46,8 @@ body {
   50%       { transform: translateY(14px) rotate(-5deg); }
 }
 
-.float-shape   { animation: float    5s ease-in-out infinite; }
-.float-shape-2 { animation: floatAlt 7s ease-in-out infinite; }
+.float-shape   { animation: float    5s ease-in-out infinite; z-index: 0; pointer-events: none; }
+.float-shape-2 { animation: floatAlt 7s ease-in-out infinite; z-index: 0; pointer-events: none; }
 
 /* Fade in up */
 @keyframes fadeInUp {
