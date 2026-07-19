@@ -13,7 +13,11 @@ export default function Gallery() {
     fetch('/data/gallery.json')
       .then(res => res.json())
       .then(data => {
-        setGalleryItems(data)
+        setGalleryItems(data.map(g => ({
+          ...g,
+          image: g.image || g.imageUrl,
+          label: g.label || g.title,
+        })))
         setLoading(false)
       })
       .catch(err => {
@@ -79,7 +83,7 @@ export default function Gallery() {
                   exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
                   transition={{ duration: 0.4, delay: i * 0.05 }}
                   onClick={() => item.image && setSelectedImage(item)}
-                  className={`${item.bg} border-2 ${item.border} rounded-2xl aspect-square flex flex-col items-center justify-center gap-2 cursor-pointer overflow-hidden relative group`}
+                  className={`${item.bg || 'bg-[#FEF9C3]'} border-2 ${item.border || 'border-[#FDE047]/40'} rounded-2xl aspect-square flex flex-col items-center justify-center gap-2 cursor-pointer overflow-hidden relative group`}
                 >
                   <motion.div 
                     initial={{ width: "100%" }}
@@ -113,7 +117,7 @@ export default function Gallery() {
                     </>
                   ) : (
                     <motion.div whileHover={{ scale: 1.05 }} className="flex flex-col items-center justify-center gap-2 w-full h-full">
-                      <span className="text-4xl">{item.emoji}</span>
+                      <span className="text-4xl">{item.emoji || '🖼️'}</span>
                       <p className="text-xs font-bold text-[#1E3A2F] text-center px-2 leading-snug">
                         {item.label}
                       </p>
