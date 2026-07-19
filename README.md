@@ -2,8 +2,8 @@
 
 Official website for Model Pashupati English Medium School, Geruwa-5, Pashupatinagar, Bardiya, Nepal.
 
-**Live site:** https://pashupati-school-website.vercel.app
-**Admin panel:** https://pashupati-school-website.vercel.app/admin/login
+**Live site:** https://mpemschool.vercel.app
+**Admin panel:** https://mpemschool.vercel.app/admin/login
 
 ## How it works
 
